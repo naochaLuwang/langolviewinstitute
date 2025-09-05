@@ -9,7 +9,7 @@ export default function Contact() {
                     <div>
                         <h1 className="text-4xl font-bold text-[#212529]">Get in Touch</h1>
                         <p className="mt-4 text-lg text-[#495057]">
-                            We're here to help. Reach out to us with any questions or inquiries you may have.
+                            We&apos;re here to help. Reach out to us with any questions or inquiries you may have.
                         </p>
 
                         <div className="mt-12 space-y-8">
@@ -116,14 +116,13 @@ export default function Contact() {
                     <div className="aspect-h-9 aspect-w-16 h-96 w-full overflow-hidden rounded-lg">
                         <iframe
                             allowFullScreen
-
-                            height="100%"
                             loading="lazy"
                             referrerPolicy="no-referrer-when-downgrade"
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3621.4985666206294!2d93.92138857562152!3d24.81261814716977!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x374927c976764091%3A0x2c2a93f04663351d!2sLangol%20View%20Hospital%20And%20Research%20Institute%20Pvt.%20Ltd!5e0!3m2!1sen!2sin!4v1757066550640!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3621.4985666206294!2d93.92138857562152!3d24.81261814716977!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x374927c976764091%3A0x2c2a93f04663351d!2sLangol%20View%20Hospital%20And%20Research%20Institute%20Pvt.%20Ltd!5e0!3m2!1sen!2sin!4v1757066550640!5m2!1sen!2sin"
                             style={{ border: 0 }}
                             width="100%"
-                        ></iframe>
+                            height="450"
+                        />
                     </div>
                 </div>
             </div>
