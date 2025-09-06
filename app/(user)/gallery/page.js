@@ -96,11 +96,17 @@ export default function GalleryPage() {
 
             {/* Modal for full-size image */}
             {selectedImage && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4">
-                    <div className="relative w-full max-w-5xl mx-auto">
+                <div
+                    className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-80 p-4"
+                    onClick={closeModal} // click backdrop closes modal
+                >
+                    <div
+                        className="relative w-full max-w-5xl mx-auto"
+                        onClick={(e) => e.stopPropagation()} // prevent inside clicks from closing
+                    >
                         <button
                             onClick={closeModal}
-                            className="absolute top-3 right-3 text-white hover:text-gray-300 transition"
+                            className="absolute top-3 right-3 z-[10000] text-white hover:text-gray-300 transition pointer-events-auto"
                         >
                             <FiX size={32} />
                         </button>
@@ -109,17 +115,19 @@ export default function GalleryPage() {
                                 src={selectedImage.image_url}
                                 alt={selectedImage.description || "Full size image"}
                                 fill
-                                className="object-contain rounded-lg shadow-xl"
+                                className="object-contain rounded-lg shadow-xl pointer-events-none"
                             />
                         </div>
                         {selectedImage.description && (
-                            <div className="mt-4 text-white text-center px-2">
+                            <div className="mt-4 text-white text-center px-2 pointer-events-auto">
                                 <p className="text-sm sm:text-base">{selectedImage.description}</p>
                             </div>
                         )}
                     </div>
                 </div>
             )}
+
+
         </main>
     );
 }
