@@ -1,16 +1,15 @@
-
 import Link from 'next/link';
 
 const Navbar = () => {
     return (
-        <nav className="bg-white shadow-sm py-4 px-6 md:px-12">
+        <nav className="sticky top-0 z-50 bg-white shadow-sm py-4 px-6 md:px-12">
             <div className="flex items-center justify-between">
                 {/* Logo Section */}
                 <div className="flex items-center space-x-2">
                     {/* Heart/Logo Icon (using a simple emoji for demonstration) */}
                     <span className="text-blue-500 text-2xl">💙</span>
                     <Link href="/">
-                        <p className="text-lg  w-[400px] font-semibold text-gray-800">Langol View Institute of Nursing and Paramedical Sciences</p>
+                        <p className="text-lg w-[400px] font-semibold text-gray-800">Langol View Institute of Nursing and Paramedical Sciences</p>
                     </Link>
                 </div>
 
@@ -28,7 +27,7 @@ const Navbar = () => {
                     <Link href="/gallery">
                         <p className="hover:text-blue-500 transition-colors duration-300">Gallery</p>
                     </Link>
-                    <Link href="/news">
+                    <Link href="/news_events">
                         <p className="hover:text-blue-500 transition-colors duration-300">News & Events</p>
                     </Link>
                     <Link href="/contact">

@@ -3,14 +3,14 @@ import Navbar from '../component/Navbar';
 import '../globals.css';
 
 export default function UserGroupLayout({ children }) {
-    return (
-        <html lang="en">
-            <body>
-                <Navbar />
-                {children}
-                <Footer />
-            </body>
+    return (<>
+        <Navbar />
+        {children}
+        <Footer />
 
-        </html>
+    </>
+
+
+
     );
 }

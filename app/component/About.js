@@ -1,4 +1,3 @@
-// components/AboutSection.tsx
 import { MdArrowForward } from "react-icons/md";
 
 const AboutSection = () => {
@@ -8,10 +7,10 @@ const AboutSection = () => {
                 <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
                     {/* Left Text Section */}
                     <div>
-                        <h2 className="text-3xl font-bold tracking-tight text-[var(--color-text-primary)] sm:text-4xl">
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#1B4332]">
                             About Us
                         </h2>
-                        <p className="mt-6 text-lg leading-8 text-[var(--color-text-secondary)]">
+                        <p className="mt-6 text-lg sm:text-xl leading-8 text-[#495057]">
                             Langol View Institute of Nursing and Paramedical Sciences was established under the banner of Langol
                             View Hospital and Research Institute Pvt. Ltd., a trusted name in healthcare known for its commitment
                             to patient care, clinical excellence, and community service. Built on this strong legacy, the institute aims
@@ -21,8 +20,8 @@ const AboutSection = () => {
                         {/* Button */}
                         <div className="mt-8">
                             <a
-                                href="#"
-                                className="inline-flex items-center gap-2 rounded-md bg-[var(--color-secondary)] px-5 py-3 text-sm font-semibold text-[var(--color-primary)] shadow-sm hover:bg-teal-100 transition-colors"
+                                href="/about"
+                                className="inline-flex items-center gap-2 rounded-md bg-[#90C9AC] px-5 py-3 text-sm font-semibold text-[#1B4332] shadow-sm hover:bg-[#A8D5BA] transition-colors"
                             >
                                 Learn More
                                 <MdArrowForward className="text-lg" />
