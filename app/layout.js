@@ -1,5 +1,6 @@
 
 import './globals.css';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export default function RootLayout({ children }) {
   return (
@@ -7,6 +8,7 @@ export default function RootLayout({ children }) {
       <body>
 
         {children}
+        <SpeedInsights />
 
       </body>
 
