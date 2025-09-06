@@ -73,8 +73,8 @@ export default function Hero() {
                 )}
 
                 <div className="mt-6 space-x-4">
-                    <button className="w-auto h-auto bg-white px-4 py-2 rounded-lg cursor-pointer">Apply Now</button>
-                    <button className="w-auto h-auto bg-white px-4 py-2 rounded-lg cursor-pointer">Contact Us</button>
+                    <Link href="/programs" className="w-auto h-auto bg-[#0d9488] px-4 py-2 text-white rounded-lg cursor-pointer hover:bg-teal-700 transition-colors">Apply Now</Link>
+                    <Link href="/contact" className="w-auto h-auto bg-white px-4 py-2 rounded-lg cursor-pointer">Contact Us</Link>
                 </div>
             </div>
 

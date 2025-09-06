@@ -9,10 +9,6 @@ const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
-
-
-
-
 const NewsSection = () => {
     const [newsList, setNewsList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -22,7 +18,6 @@ const NewsSection = () => {
     const [isGalleryLoading, setIsGalleryLoading] = useState(true);
     const [galleryError, setGalleryError] = useState(null);
 
-
     const fetchGalleryItems = async () => {
         setIsGalleryLoading(true);
         setGalleryError(null);
@@ -30,11 +25,10 @@ const NewsSection = () => {
             const { data, error } = await supabase
                 .from("gallery")
                 .select("*")
-                .order("created_at", { ascending: false });
+                .order("created_at", { ascending: false })
+                .limit(6); // Limit to 6 images
 
-            if (error) {
-                throw new Error(error.message);
-            }
+            if (error) throw new Error(error.message);
             setGalleryItems(data);
         } catch (err) {
             setGalleryError(`Failed to fetch gallery: ${err.message}`);
@@ -44,11 +38,9 @@ const NewsSection = () => {
         }
     };
 
-
     useEffect(() => {
         fetchGalleryItems();
     }, []);
-
 
     useEffect(() => {
         async function fetchNews() {
@@ -56,12 +48,10 @@ const NewsSection = () => {
                 const { data, error } = await supabase
                     .from("news")
                     .select("id, title, created_at, description")
-                    .order("created_at", { ascending: false });
+                    .order("created_at", { ascending: false })
+                    .limit(5); // Optional: limit to 5 news items
 
-                if (error) {
-                    throw error;
-                }
-
+                if (error) throw error;
                 setNewsList(data);
             } catch (err) {
                 console.error("Error fetching news:", err);
@@ -73,11 +63,20 @@ const NewsSection = () => {
 
         fetchNews();
     }, []);
-    return (
-        <section className="max-w-7xl mx-auto px-6 pb-12 grid md:grid-cols-2 gap-0">
 
+    return (
+        <section className="max-w-7xl mx-auto px-6 pb-12 grid md:grid-cols-2 gap-6">
             {/* News Section */}
-            <div className="h-96 overflow-y-scroll pr-2">
+            <div className="h-96 overflow-y-auto pr-2">
+                <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold text-[#1B4332]">Latest News & Events</h2>
+                    <a
+                        href="/news_events"
+                        className="bg-[#1B4332] text-white px-3 py-1 text-sm rounded hover:bg-green-800 transition"
+                    >
+                        View All
+                    </a>
+                </div>
 
                 {isLoading ? (
                     <p className="text-center text-gray-500">Loading news...</p>
@@ -101,9 +100,8 @@ const NewsSection = () => {
                                 <p className="text-xs text-gray-500 mb-3">
                                     {news.description || "No description available."}
                                 </p>
-
                                 <a
-                                    href={`/news_events/${news.id}`} // Link to the full article page
+                                    href={`/news_events/${news.id}`}
                                     className="inline-block bg-[#1B4332] text-white px-4 py-2 text-sm rounded hover:bg-green-800 transition"
                                 >
                                     Read More
@@ -115,17 +113,26 @@ const NewsSection = () => {
             </div>
 
             {/* Gallery Section */}
-            <div>
+            <div className="h-96 overflow-hidden">
+                <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold text-[#1B4332]">Gallery</h2>
+                    <a
+                        href="/gallery"
+                        className="bg-[#1B4332] text-white px-3 py-1 text-sm rounded hover:bg-green-800 transition"
+                    >
+                        View All
+                    </a>
+                </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                    {galleryItems.map((items, index) => (
+                <div className="grid grid-cols-2 gap-4 h-full">
+                    {galleryItems.map((item, index) => (
                         <div
                             key={index}
                             className="relative w-full h-40 rounded-lg overflow-hidden shadow-md"
                         >
                             <Image
-                                src={items.image_url}
-                                alt={items.description || "Gallery Image"}
+                                src={item.image_url}
+                                alt={item.description || "Gallery Image"}
                                 fill
                                 className="object-cover"
                             />
@@ -134,6 +141,7 @@ const NewsSection = () => {
                 </div>
             </div>
         </section>
+
     );
 };
 

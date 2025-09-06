@@ -26,7 +26,7 @@ export default function Leadership() {
             const { data, error } = await supabase
                 .from("faculty")
                 .select("*")
-                .order("created_at", { ascending: false });
+                .order("created_at", { ascending: true });
 
             if (error) {
                 throw new Error(error.message);

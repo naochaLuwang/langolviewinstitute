@@ -54,7 +54,7 @@ const Footer = () => {
             </div>
 
             {/* Copyright Section */}
-            <div className="w-full h-10 flex items-center justify-center bg-[#90C9AC] absolute bottom-0">
+            <div className="w-full h-16 md:h-10 flex items-center justify-center bg-[#90C9AC] absolute bottom-0">
                 <p className="text-sm text-[#1B4332] text-center px-4">
                     © {new Date().getFullYear()} Langol View Institute of Nursing and Paramedical Sciences. All rights reserved. Designed and developed by Luwang Tech.
                 </p>

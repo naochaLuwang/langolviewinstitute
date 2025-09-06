@@ -83,7 +83,7 @@ export default function AddFacultyPage() {
             setMessage("Faculty member added successfully!");
             setFormData({ name: "", designation: "", image: null, message: "" });
             setPreview(null);
-            router.push("/dashboard/faculty");
+            router.push("/dashboard/members");
         } catch (err) {
             console.error("Save Error:", err);
             setMessage(`Error: ${err.message}`);

@@ -89,7 +89,7 @@ export default function ProgramPage() {
 
     return (
         <main className="p-8 max-w-6xl  mx-auto">
-            <div className="flex space-x-2"><Link href="/">Home</Link><span>/</span><Link href="/news_events">News & Events</Link></div>
+            {/* <div className="flex space-x-2"><Link href="/">Home</Link><span>/</span><Link href="/">Courses</Link></div> */}
             <div className="bg-white p-8 min-h-[80vh] rounded-lg shadow-lg">
                 <h1 className="text-4xl font-bold text-[#1B4332] mb-4">
                     {programs.course_name}
