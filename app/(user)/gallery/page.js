@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { FiX } from "react-icons/fi";
-
+import Image from "next/image";
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -25,9 +25,7 @@ export default function GalleryPage() {
                 .select("*")
                 .order("created_at", { ascending: false });
 
-            if (error) {
-                throw new Error(error.message);
-            }
+            if (error) throw new Error(error.message);
             setGalleryItems(data);
         } catch (err) {
             setGalleryError(`Failed to fetch gallery: ${err.message}`);
@@ -37,17 +35,17 @@ export default function GalleryPage() {
         }
     };
 
-    const handleImageClick = (item) => {
-        setSelectedImage(item);
-    };
-
-    const closeModal = () => {
-        setSelectedImage(null);
-    };
+    const handleImageClick = (item) => setSelectedImage(item);
+    const closeModal = () => setSelectedImage(null);
 
     useEffect(() => {
         fetchGalleryItems();
     }, []);
+
+    // Skeleton loader component
+    const SkeletonCard = () => (
+        <div className="w-full pb-[100%] bg-gray-300 rounded-lg animate-pulse" />
+    );
 
     return (
         <main className="max-w-7xl mx-auto min-h-[86vh] px-4 sm:px-6 lg:px-8 pb-12">
@@ -65,7 +63,11 @@ export default function GalleryPage() {
 
                 {/* Gallery Display */}
                 {isGalleryLoading ? (
-                    <p className="text-gray-500 text-center">Loading gallery...</p>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+                        {Array.from({ length: 10 }).map((_, idx) => (
+                            <SkeletonCard key={idx} />
+                        ))}
+                    </div>
                 ) : galleryError ? (
                     <p className="text-red-500 text-center">{galleryError}</p>
                 ) : galleryItems.length === 0 ? (
@@ -79,10 +81,11 @@ export default function GalleryPage() {
                                 onClick={() => handleImageClick(item)}
                             >
                                 <div className="w-full pb-[100%] relative">
-                                    <img
+                                    <Image
                                         src={item.image_url}
                                         alt={item.description || "Gallery Image"}
-                                        className="absolute h-full w-full object-cover rounded-lg transform transition-transform duration-300 group-hover:scale-105"
+                                        fill
+                                        className="object-cover rounded-lg transform transition-transform duration-300 group-hover:scale-105"
                                     />
                                 </div>
                             </div>
@@ -101,11 +104,14 @@ export default function GalleryPage() {
                         >
                             <FiX size={32} />
                         </button>
-                        <img
-                            src={selectedImage.image_url}
-                            alt={selectedImage.description || "Full size image"}
-                            className="w-full max-h-[80vh] object-contain rounded-lg shadow-xl"
-                        />
+                        <div className="relative w-full h-[80vh]">
+                            <Image
+                                src={selectedImage.image_url}
+                                alt={selectedImage.description || "Full size image"}
+                                fill
+                                className="object-contain rounded-lg shadow-xl"
+                            />
+                        </div>
                         {selectedImage.description && (
                             <div className="mt-4 text-white text-center px-2">
                                 <p className="text-sm sm:text-base">{selectedImage.description}</p>

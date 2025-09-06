@@ -59,28 +59,29 @@ export default function Leadership() {
 
                 {/* Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {facultyList.map((member, idx) => (
-                        <div
-                            key={idx}
-                            className="flex flex-col items-center text-center bg-white rounded-lg shadow-md p-6 transition-transform transform hover:-translate-y-2"
-                        >
+                    {facultyList.map((member) => (
+
+                        <div key={member.id} className="flex flex-col items-center text-center bg-white rounded-lg shadow-md p-6 transition-transform transform hover:-translate-y-2 hover:shadow-lg cursor-pointer">
                             {/* Avatar */}
-                            <div className="relative w-36 h-36 mb-4">
+
+                            <Link href={`/members/${member.id}`} > <div className="relative w-36 h-36 mb-4">
                                 <Image
-                                    src="/placeholder.jpg" // ✅ replace with real image later
+                                    src={member.image_url || "/placeholder.jpg"} // dynamic image
                                     alt={member.name}
                                     fill
                                     className="rounded-full border-4 border-white shadow-lg object-cover"
                                     sizes="(max-width: 768px) 100vw, 200px"
                                 />
-                            </div>
-                            <h3 className=" text-lg font-medium text-primary">
-                                {member.name}
-                            </h3>
-                            <p className="text-base text-primary font-base">
-                                {member.designation}
-                            </p>
+                            </div></Link>
+
+
+                            <h3 className="text-lg font-medium text-primary">{member.name}</h3>
+                            <p className="text-base text-primary font-base">{member.designation}</p>
                         </div>
+
+
+
+
                     ))}
                 </div>
             </div>

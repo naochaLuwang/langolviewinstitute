@@ -1,6 +1,36 @@
+"use client";
+import { useEffect, useState } from "react";
 import { MdLocationOn, MdCall, MdEmail } from "react-icons/md";
+import supabase from "../../lib/supabaseClient";
 
 export default function Contact() {
+    const [settings, setSettings] = useState({
+        address: "",
+        phone: "",
+        email: ""
+    });
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchSettings() {
+            try {
+                const { data, error } = await supabase
+                    .from("site_settings")
+                    .select("address, phone, email")
+                    .single(); // assuming only one row
+
+                if (error) throw error;
+                setSettings(data);
+            } catch (err) {
+                console.error("Error fetching site settings:", err.message);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchSettings();
+    }, []);
+
     return (
         <main className="flex-grow">
             <div className="container mx-auto px-6 py-16">
@@ -20,10 +50,11 @@ export default function Contact() {
                                 </div>
                                 <div>
                                     <h3 className="text-lg font-semibold">Address</h3>
-                                    <p className="text-[#495057]">
-                                        Uripok Bachaspati Leikai, RIMS South Gate, Near Kombirei Keithel,
-                                        Imphal West, Manipur-795001
-                                    </p>
+                                    {loading ? (
+                                        <div className="h-4 w-64 bg-gray-300 rounded animate-pulse mt-1"></div>
+                                    ) : (
+                                        <p className="text-[#495057]">{settings.address}</p>
+                                    )}
                                 </div>
                             </div>
 
@@ -34,7 +65,11 @@ export default function Contact() {
                                 </div>
                                 <div>
                                     <h3 className="text-lg font-semibold">Phone</h3>
-                                    <p className="text-[#495057]">6909988995</p>
+                                    {loading ? (
+                                        <div className="h-4 w-32 bg-gray-300 rounded animate-pulse mt-1"></div>
+                                    ) : (
+                                        <p className="text-[#495057]">{settings.phone}</p>
+                                    )}
                                 </div>
                             </div>
 
@@ -45,7 +80,11 @@ export default function Contact() {
                                 </div>
                                 <div>
                                     <h3 className="text-lg font-semibold">Email</h3>
-                                    <p className="text-[#495057]">info.langolviewinstitute@gmail.com</p>
+                                    {loading ? (
+                                        <div className="h-4 w-48 bg-gray-300 rounded animate-pulse mt-1"></div>
+                                    ) : (
+                                        <p className="text-[#495057]">{settings.email}</p>
+                                    )}
                                 </div>
                             </div>
                         </div>
