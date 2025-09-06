@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { createClient } from "@supabase/supabase-js";
+import Link from "next/link";
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -70,12 +71,12 @@ const NewsSection = () => {
             <div className="h-96 overflow-y-auto pr-2">
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-2xl font-bold text-[#1B4332]">Latest News & Events</h2>
-                    <a
+                    <Link
                         href="/news_events"
                         className="bg-[#1B4332] text-white px-3 py-1 text-sm rounded hover:bg-green-800 transition"
                     >
                         View All
-                    </a>
+                    </Link>
                 </div>
 
                 {isLoading ? (
@@ -100,12 +101,12 @@ const NewsSection = () => {
                                 <p className="text-xs text-gray-500 mb-3">
                                     {news.description || "No description available."}
                                 </p>
-                                <a
+                                <Link
                                     href={`/news_events/${news.id}`}
                                     className="inline-block bg-[#1B4332] text-white px-4 py-2 text-sm rounded hover:bg-green-800 transition"
                                 >
                                     Read More
-                                </a>
+                                </Link>
                             </div>
                         ))}
                     </div>
@@ -116,12 +117,12 @@ const NewsSection = () => {
             <div className="h-96 overflow-hidden">
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-2xl font-bold text-[#1B4332]">Gallery</h2>
-                    <a
+                    <Link
                         href="/gallery"
                         className="bg-[#1B4332] text-white px-3 py-1 text-sm rounded hover:bg-green-800 transition"
                     >
                         View All
-                    </a>
+                    </Link>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 h-full">

@@ -1,15 +1,14 @@
 "use client";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-
-import { FiEdit, FiDownload } from "react-icons/fi";
 import { createClient } from "@supabase/supabase-js";
+const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);
 
 const Programs = () => {
-    const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    );
+
     const [programs, setPrograms] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
