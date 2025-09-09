@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { MdArrowForward } from "react-icons/md";
 
 const AboutSection = () => {
@@ -10,7 +11,7 @@ const AboutSection = () => {
                         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#1B4332]">
                             About Us
                         </h2>
-                        <p className="mt-6 text-lg sm:text-xl leading-8 text-[#495057]">
+                        <p className="mt-6 text-base sm:text-xl leading-8 text-[#495057]">
                             Langol View Institute of Nursing and Paramedical Sciences was established under the banner of Langol
                             View Hospital and Research Institute Pvt. Ltd., a trusted name in healthcare known for its commitment
                             to patient care, clinical excellence, and community service. Built on this strong legacy, the institute aims
@@ -31,9 +32,11 @@ const AboutSection = () => {
 
                     {/* Right Image */}
                     <div className="mt-12 lg:mt-0">
-                        <img
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAc8l7VXrzJCjo6Cs8-_iPSR3ddr8Qpq150DxuyhQnaDh15vd2ywBMnMZWDW8HeZUaYlPUXpEAlSrG7API8D_9yVkKcOcrPb9LVI-7ujx6_Yl7MPT9D7CmkiC7mzr0Ch2kPzgwqFdBGxFn4Hxhp70YoPkckfigF3qKdVxhdDGTEQn7Hm4Zss6L-DOmOSYbNVzxZmcBBoA5c4-EGMY5AwaoS1Rfed2D1GQMKPRTkDHW8xke1inXTTr1ns7aXiYU9NeickHXwZvPe-cM"
+                        <Image
+                            src="/images/IMG_3526.JPG"
                             alt="Doctors collaborating"
+                            width={600}   // specify the actual or desired width
+                            height={400}  // specify the actual or desired height
                             className="rounded-lg shadow-xl"
                         />
                     </div>

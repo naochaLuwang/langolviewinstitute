@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FaEnvelope, FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
+import { FiShield } from "react-icons/fi";
 
 const Footer = () => {
     return (
@@ -48,6 +49,13 @@ const Footer = () => {
                                 Uripok Bachaspati Leikai, RIMS South Gate, Near Kombirei Keithel,
                                 Imphal West, Manipur-795001
                             </p>
+                        </div>
+
+                        <div className="p-4  flex justify-end space-x-0">
+                            <FiShield className="text-green-600 text-xl" />
+                            <Link href="/sign-in" className="text-sm font-medium text-gray-700 hover:text-green-600">
+                                Admin Dashboard
+                            </Link>
                         </div>
                     </div>
                 </div>

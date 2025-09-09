@@ -15,22 +15,34 @@ export default function AddFacultyPage() {
         name: "",
         designation: "",
         image: null,
+        signature: null,
         message: "",
     });
-    const [preview, setPreview] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
+    const [signaturePreview, setSignaturePreview] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState("");
 
     const router = useRouter();
 
-    const handleFileChange = (e) => {
+    const handleFileChange = (e, field) => {
         const file = e.target.files[0];
         if (file) {
-            setFormData({ ...formData, image: file });
-            setPreview(URL.createObjectURL(file));
+            setFormData({ ...formData, [field]: file });
+
+            if (field === "image") {
+                setImagePreview(URL.createObjectURL(file));
+            } else if (field === "signature") {
+                setSignaturePreview(URL.createObjectURL(file));
+            }
         } else {
-            setFormData({ ...formData, image: null });
-            setPreview(null);
+            setFormData({ ...formData, [field]: null });
+
+            if (field === "image") {
+                setImagePreview(null);
+            } else if (field === "signature") {
+                setSignaturePreview(null);
+            }
         }
     };
 
@@ -66,12 +78,14 @@ export default function AddFacultyPage() {
 
         try {
             const imageUrl = await uploadFile(formData.image);
+            const signatureUrl = await uploadFile(formData.signature);
 
             const dataToSave = {
                 name: formData.name,
                 designation: formData.designation,
                 message: formData.message,
                 image_url: imageUrl,
+                signature_url: signatureUrl,
             };
 
             const { error } = await supabase.from("faculty").insert([dataToSave]);
@@ -81,8 +95,15 @@ export default function AddFacultyPage() {
             }
 
             setMessage("Faculty member added successfully!");
-            setFormData({ name: "", designation: "", image: null, message: "" });
-            setPreview(null);
+            setFormData({
+                name: "",
+                designation: "",
+                image: null,
+                signature: null,
+                message: "",
+            });
+            setImagePreview(null);
+            setSignaturePreview(null);
             router.push("/dashboard/members");
         } catch (err) {
             console.error("Save Error:", err);
@@ -95,6 +116,7 @@ export default function AddFacultyPage() {
     return (
         <div className="max-w-6xl mx-auto px-6 py-8">
             <h1 className="text-3xl font-bold text-[#1B4332] mb-8">Add New Faculty Member</h1>
+
             {message && (
                 <div
                     className={`p-4 mb-4 rounded-lg ${message.startsWith("Error")
@@ -105,83 +127,120 @@ export default function AddFacultyPage() {
                     {message}
                 </div>
             )}
+
             <form
                 onSubmit={handleSubmit}
                 className="space-y-8 bg-white p-8 rounded-xl shadow-lg border border-gray-100"
             >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Left Column */}
-                    <div className="space-y-6">
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Name
-                            </label>
-                            <input
-                                type="text"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                                placeholder="Enter full name"
-                                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Designation
-                            </label>
-                            <input
-                                type="text"
-                                name="designation"
-                                value={formData.designation}
-                                onChange={handleChange}
-                                placeholder="e.g., Associate Professor"
-                                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Message
-                            </label>
-                            <textarea
-                                name="message"
-                                value={formData.message}
-                                onChange={handleChange}
-                                placeholder="Enter a message or biography"
-                                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500"
-                                rows={4}
-                            />
-                        </div>
+                {/* General Information */}
+                <div className="space-y-6">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Name
+                        </label>
+                        <input
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="Enter full name"
+                            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500"
+                            required
+                        />
                     </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Designation
+                        </label>
+                        <input
+                            type="text"
+                            name="designation"
+                            value={formData.designation}
+                            onChange={handleChange}
+                            placeholder="e.g., Associate Professor"
+                            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Message
+                        </label>
+                        <textarea
+                            name="message"
+                            value={formData.message}
+                            onChange={handleChange}
+                            placeholder="Enter a message or biography"
+                            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500"
+                            rows={4}
+                        />
+                    </div>
+                </div>
 
-                    {/* Right Column - Image Upload */}
-                    <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 space-y-4">
-                        {preview ? (
-                            <img src={preview} alt="Image Preview" className="rounded-lg max-h-48 object-cover" />
+                {/* Image Upload Section */}
+                {/* Image Upload Section */}
+                <div className="mb-8">
+                    <h2 className="text-lg font-semibold text-[#1B4332] mb-4 flex items-center space-x-2">
+                        <FiUpload className="h-5 w-5 text-[#1B4332]" />
+                        <span>Upload Faculty Image</span>
+                    </h2>
+                    <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 space-y-4 bg-gray-50">
+                        {imagePreview ? (
+                            <img src={imagePreview} alt="Image Preview" className="rounded-lg max-h-48 object-cover" />
                         ) : (
                             <div className="text-center text-gray-500">
                                 <FiUpload className="mx-auto h-12 w-12 text-gray-400" />
-                                <p className="mt-2 text-sm">Upload an image</p>
+                                <p className="mt-2 text-sm">Upload faculty image</p>
                             </div>
                         )}
                         <label className="block w-full text-center">
                             <span className="cursor-pointer inline-block bg-[#1B4332] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-800 transition">
-                                Select File
+                                Select Image
                             </span>
                             <input
                                 type="file"
                                 name="image"
                                 accept="image/*"
-                                onChange={handleFileChange}
+                                onChange={(e) => handleFileChange(e, "image")}
                                 className="sr-only"
                             />
                         </label>
                     </div>
                 </div>
 
+                {/* Signature Upload Section */}
+                <div>
+                    <h2 className="text-lg font-semibold text-[#1B4332] mb-4 flex items-center space-x-2">
+                        <FiUpload className="h-5 w-5 text-[#1B4332]" />
+                        <span>Upload Faculty Signature</span>
+                    </h2>
+                    <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 space-y-4 bg-gray-50">
+                        {signaturePreview ? (
+                            <img src={signaturePreview} alt="Signature Preview" className="rounded-lg max-h-48 object-cover" />
+                        ) : (
+                            <div className="text-center text-gray-500">
+                                <FiUpload className="mx-auto h-12 w-12 text-gray-400" />
+                                <p className="mt-2 text-sm">Upload faculty signature</p>
+                            </div>
+                        )}
+                        <label className="block w-full text-center">
+                            <span className="cursor-pointer inline-block bg-[#1B4332] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-800 transition">
+                                Select Signature
+                            </span>
+                            <input
+                                type="file"
+                                name="signature"
+                                accept="image/*"
+                                onChange={(e) => handleFileChange(e, "signature")}
+                                className="sr-only"
+                            />
+                        </label>
+                    </div>
+                </div>
+
+
                 {/* Submit Button */}
-                <div className="pt-4">
+                <div>
                     <button
                         type="submit"
                         disabled={isLoading}

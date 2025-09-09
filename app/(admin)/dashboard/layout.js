@@ -23,12 +23,25 @@ export default function DashboardLayout({ children }) {
                 setUser(user);
             }
         });
+
+        // const { data: subscription } = supabase.auth.onAuthStateChange((event, session) => {
+        //     if (event === "SIGNED_OUT" || !session?.user) {
+        //         router.push("/sign-in");
+        //         setUser(null);
+        //     }
+        // });
+
+        // return () => {
+        //     subscription?.unsubscribe();
+        // };
     }, [router]);
 
-    if (!user) {
-        return null; // Or show a loading spinner
-    }
 
+
+
+    if (!user) {
+        return null; // Or a loading spinner while checking auth
+    }
     return (
         <>
 

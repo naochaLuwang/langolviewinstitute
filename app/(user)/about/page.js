@@ -93,7 +93,7 @@ const AboutPage = () => {
                                 className="w-full h-80 bg-center bg-cover"
                                 style={{
                                     backgroundImage:
-                                        'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBwprhfMtEpfxXEuoUKtIdNjolkYrq9MAXZvUy_8Df2EXhcKgEAVJl61fSqqaSCK2UHJS9_KGQJRdHLjjdkfx_YPRwHH9jdjPOS0TxJoGjJ8pHqvuiN5Fm8hQEFq8Cj94L_elV_9IHpZqZVHHP-dzXMyqABq54gkMLq4Ox-OnRyjxlo0HpqEtNCbS2PE_MUHV56KJ4IZF-Ttf3ikzZIA2kmJyTs5mZ5oKVFR9rk2SFz_397WrCZvI9bVPw1GB4LJpm2VWgvis1JOcY")',
+                                        'url("/images/IMG_3443.JPG")'
                                 }}
                             />
                         </div>

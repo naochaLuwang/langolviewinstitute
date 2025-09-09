@@ -64,12 +64,12 @@ export default function Leadership() {
                         <div key={member.id} className="flex flex-col items-center text-center bg-white rounded-lg shadow-md p-6 transition-transform transform hover:-translate-y-2 hover:shadow-lg cursor-pointer">
                             {/* Avatar */}
 
-                            <Link href={`/members/${member.id}`} > <div className="relative w-36 h-36 mb-4">
+                            <Link href={`/members/${member.id}`} > <div className="relative w-36 h-44 mb-4">
                                 <Image
                                     src={member.image_url || "/placeholder.jpg"} // dynamic image
                                     alt={member.name}
                                     fill
-                                    className="rounded-full border-4 border-white shadow-lg object-cover"
+                                    className="rounded-lg border-4 border-white shadow-lg object-cover"
                                     sizes="(max-width: 768px) 100vw, 200px"
                                 />
                             </div></Link>

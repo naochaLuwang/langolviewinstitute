@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FiLogOut } from "react-icons/fi";
+import supabase from "../lib/supabaseClient";
 
 export default function SignOutButton() {
     const [isLoading, setIsLoading] = useState(false);
@@ -10,15 +11,8 @@ export default function SignOutButton() {
     const handleSignOut = async () => {
         setIsLoading(true);
         try {
-            const response = await fetch("/api/auth/sign-out", {
-                method: "POST",
-            });
-
-            if (!response.ok) {
-                throw new Error("Failed to sign out.");
-            }
-
-            // Redirect to the sign-in page after successful sign-out
+            const { error } = await supabase.auth.signOut();
+            if (error) throw error;
             router.push("/sign-in");
         } catch (err) {
             console.error("Sign-out error:", err);

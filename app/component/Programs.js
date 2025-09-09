@@ -65,7 +65,7 @@ const Programs = () => {
                                 <p className="text-gray-600 text-sm md:text-base">
                                     <span className="font-medium">Duration:</span> {program.duration}
                                 </p>
-                                <p className="text-gray-600 mt-1 text-sm md:text-base">
+                                <p className="text-gray-600 mt-1 text-sm md:text-base line-clamp-3">
                                     <span className="font-medium">Eligibility:</span>{" "}
                                     {program.eligibility}
                                 </p>

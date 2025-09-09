@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { useParams, useRouter } from "next/navigation";
 import { FiDownload } from "react-icons/fi";
+import { FiHome, FiBookOpen, FiChevronRight } from "react-icons/fi";
 import Link from "next/link";
 
 // Initialize Supabase client
@@ -91,7 +92,27 @@ export default function NewsArticlePage() {
 
     return (
         <main className="p-8 max-w-6xl  mx-auto">
-            <div className="flex space-x-2"><Link href="/">Home</Link><span>/</span><Link href="/news_events">News & Events</Link></div>
+            <nav className="text-sm text-gray-600 mb-6 flex items-center" aria-label="Breadcrumb">
+                <ol className="list-reset flex items-center space-x-2">
+                    <li className="flex items-center space-x-1">
+                        <FiHome className="text-gray-400" />
+                        <Link href="/" className="hover:text-blue-500">Home</Link>
+                    </li>
+                    <li>
+                        <FiChevronRight className="text-gray-400" />
+                    </li>
+                    <li className="flex items-center space-x-1">
+                        <FiBookOpen className="text-gray-400" />
+                        <Link href="/news_events" className="hover:text-blue-500">News</Link>
+                    </li>
+                    <li>
+                        <FiChevronRight className="text-gray-400" />
+                    </li>
+                    <li className="text-gray-500 flex items-center space-x-1">
+                        <span>{news.title}</span>
+                    </li>
+                </ol>
+            </nav>
             <div className="bg-white p-8 min-h-[80vh] rounded-lg shadow-lg">
                 <h1 className="text-4xl font-bold text-[#1B4332] mb-4">
                     {news.title}

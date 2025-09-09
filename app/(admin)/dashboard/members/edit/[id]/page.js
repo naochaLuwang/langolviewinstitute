@@ -19,8 +19,10 @@ export default function EditFacultyPage() {
         designation: "",
         message: "",
         image: null,
+        signature: null,
     });
-    const [preview, setPreview] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
+    const [signaturePreview, setSignaturePreview] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState("");
 
@@ -42,19 +44,26 @@ export default function EditFacultyPage() {
                 name: data.name,
                 designation: data.designation,
                 message: data.message || "",
-                image: null, // keep null, only change if user uploads a new one
+                image: null, // user can upload new image
+                signature: null, // user can upload new signature
             });
-            setPreview(data.image_url);
+            setImagePreview(data.image_url);
+            setSignaturePreview(data.signature_url);
         };
 
         if (id) fetchFaculty();
     }, [id]);
 
-    const handleFileChange = (e) => {
+    const handleFileChange = (e, field) => {
         const file = e.target.files[0];
         if (file) {
-            setFormData({ ...formData, image: file });
-            setPreview(URL.createObjectURL(file));
+            setFormData({ ...formData, [field]: file });
+
+            if (field === "image") {
+                setImagePreview(URL.createObjectURL(file));
+            } else if (field === "signature") {
+                setSignaturePreview(URL.createObjectURL(file));
+            }
         }
     };
 
@@ -89,9 +98,15 @@ export default function EditFacultyPage() {
         setMessage("");
 
         try {
-            let imageUrl = preview; // keep existing image
+            let imageUrl = imagePreview;
+            let signatureUrl = signaturePreview;
+
             if (formData.image) {
                 imageUrl = await uploadFile(formData.image);
+            }
+
+            if (formData.signature) {
+                signatureUrl = await uploadFile(formData.signature);
             }
 
             const { error } = await supabase
@@ -101,6 +116,7 @@ export default function EditFacultyPage() {
                     designation: formData.designation,
                     message: formData.message,
                     image_url: imageUrl,
+                    signature_url: signatureUrl,
                 })
                 .eq("id", id);
 
@@ -118,6 +134,7 @@ export default function EditFacultyPage() {
     return (
         <div className="max-w-6xl mx-auto px-6 py-8">
             <h1 className="text-3xl font-bold text-[#1B4332] mb-8">Edit Faculty Member</h1>
+
             {message && (
                 <div
                     className={`p-4 mb-4 rounded-lg ${message.startsWith("Error")
@@ -128,6 +145,7 @@ export default function EditFacultyPage() {
                     {message}
                 </div>
             )}
+
             <form
                 onSubmit={handleSubmit}
                 className="space-y-8 bg-white p-8 rounded-xl shadow-lg border border-gray-100"
@@ -175,36 +193,66 @@ export default function EditFacultyPage() {
                         </div>
                     </div>
 
-                    {/* Right Column - Image Upload */}
-                    <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 space-y-4">
-                        {preview ? (
-                            <img
-                                src={preview}
-                                alt="Image Preview"
-                                className="rounded-lg max-h-48 object-cover"
-                            />
-                        ) : (
-                            <div className="text-center text-gray-500">
-                                <FiUpload className="mx-auto h-12 w-12 text-gray-400" />
-                                <p className="mt-2 text-sm">Upload an image</p>
+                    {/* Right Column - Image and Signature Upload */}
+                    <div className="space-y-6">
+                        {/* Image Upload */}
+                        <div>
+                            <h2 className="text-lg font-semibold text-gray-700 mb-4">Faculty Image</h2>
+                            <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 space-y-4">
+                                {imagePreview ? (
+                                    <img src={imagePreview} alt="Image Preview" className="rounded-lg max-h-48 object-cover" />
+                                ) : (
+                                    <div className="text-center text-gray-500">
+                                        <FiUpload className="mx-auto h-12 w-12 text-gray-400" />
+                                        <p className="mt-2 text-sm">Upload an image</p>
+                                    </div>
+                                )}
+                                <label className="block w-full text-center">
+                                    <span className="cursor-pointer inline-block bg-[#1B4332] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-800 transition">
+                                        Select Image
+                                    </span>
+                                    <input
+                                        type="file"
+                                        name="image"
+                                        accept="image/*"
+                                        onChange={(e) => handleFileChange(e, "image")}
+                                        className="sr-only"
+                                    />
+                                </label>
                             </div>
-                        )}
-                        <label className="block w-full text-center">
-                            <span className="cursor-pointer inline-block bg-[#1B4332] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-800 transition">
-                                Select File
-                            </span>
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={handleFileChange}
-                                className="sr-only"
-                            />
-                        </label>
+                        </div>
+
+                        {/* Signature Upload */}
+                        <div>
+                            <h2 className="text-lg font-semibold text-gray-700 mb-4">Faculty Signature</h2>
+                            <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 space-y-4">
+                                {signaturePreview ? (
+                                    <img src={signaturePreview} alt="Signature Preview" className="rounded-lg max-h-48 object-cover" />
+                                ) : (
+                                    <div className="text-center text-gray-500">
+                                        <FiUpload className="mx-auto h-12 w-12 text-gray-400" />
+                                        <p className="mt-2 text-sm">Upload a signature</p>
+                                    </div>
+                                )}
+                                <label className="block w-full text-center">
+                                    <span className="cursor-pointer inline-block bg-[#1B4332] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-800 transition">
+                                        Select Signature
+                                    </span>
+                                    <input
+                                        type="file"
+                                        name="signature"
+                                        accept="image/*"
+                                        onChange={(e) => handleFileChange(e, "signature")}
+                                        className="sr-only"
+                                    />
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 {/* Submit Button */}
-                <div className="pt-4">
+                <div>
                     <button
                         type="submit"
                         disabled={isLoading}
