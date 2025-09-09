@@ -82,7 +82,7 @@ export default function CoursesPage() {
                                     <p className="text-gray-600">
                                         <span className="font-medium">Duration:</span> {course.duration}
                                     </p>
-                                    <p className="text-gray-600 mt-1">
+                                    <p className="text-gray-600 line-clamp-3 mt-1">
                                         <span className="font-medium">Eligibility:</span> {course.eligibility}
                                     </p>
                                 </div>
